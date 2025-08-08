@@ -120,19 +120,20 @@ func main() {
 		}
 		// POST: handle scrape
 		if err := r.ParseForm(); err != nil {
-			fmt.Fprintf(w, "<html><body>%s<p style='color:red'>Invalid form</p></body></html>", formTmpl)
+			// Show error below the card
+			fmt.Fprintf(w, "<html><body><div style='display:flex;flex-direction:column;align-items:center;'>%s<div class='result'><p style='color:red'>Invalid form</p></div></div></body></html>", formTmpl)
 			return
 		}
 		url := r.FormValue("url")
 		typeOpt := r.FormValue("type")
 		if url == "" {
-			fmt.Fprintf(w, "<html><body>%s<p style='color:red'>URL required</p></body></html>", formTmpl)
+			fmt.Fprintf(w, "<html><body><div style='display:flex;flex-direction:column;align-items:center;'>%s<div class='result'><p style='color:red'>URL required</p></div></div></body></html>", formTmpl)
 			return
 		}
 		os.MkdirAll("Downloaded", 0755)
 		html, err := internal.RenderPage(url, 50*time.Second)
 		if err != nil {
-			fmt.Fprintf(w, "<html><body>%s<p>Page render error: %v</p></body></html>", formTmpl, err)
+			fmt.Fprintf(w, "<html><body><div style='display:flex;flex-direction:column;align-items:center;'>%s<div class='result'><p>Page render error: %v</p></div></div></body></html>", formTmpl, err)
 			return
 		}
 		var imageURLs, videoURLs []string
@@ -161,7 +162,8 @@ func main() {
 				result += "<p>No video URLs found.</p>"
 			}
 		}
-		fmt.Fprintf(w, "<html><body>%s%s</body></html>", formTmpl, result)
+		// Show result below the card
+		fmt.Fprintf(w, "<html><body><div style='display:flex;flex-direction:column;align-items:center;'>%s<div class='result'>%s</div></div></body></html>", formTmpl, result)
 	})
 
 	fmt.Println("Web UI running at http://localhost:8080/")
