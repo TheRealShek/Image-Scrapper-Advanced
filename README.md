@@ -1,38 +1,79 @@
-# Image & Video Scraper
 
-A modular Go application to scrape images and videos from a web page.
+# Image & Video Scraper (Go)
 
-## File Structure
+>A modern, modular Go application to scrape images and videos from any web page, with a beautiful web UI and robust edge-case handling.
 
-- `main.go` — Entry point. Handles CLI flags, output directory, and calls the scraper and downloader.
-- `scraper.go` — Contains the `Scrape` function to extract image and video URLs from a web page.
-- `downloader.go` — Contains the `Download` function to download files from URLs to disk.
+---
+
+## Features
+- **Web UI**: Paste a URL, select scrape type (image/video/all), and download with a click.
+- **Dynamic Content**: Uses a headless browser to render JavaScript-heavy sites.
+- **Smart Extraction**: Grabs full-res images and videos, avoids thumbnails, and handles data/relative URLs.
+- **Concurrent Downloads**: Fast, multi-threaded downloading.
+- **Auto File Type Detection**: Files are saved with the correct extension (jpg, png, mp4, etc.).
+- **Auto-Cleanup**: Skips and deletes files smaller than 50KB (configurable).
+
+---
+
+## Getting Started
+
+### 1. Clone & Install
+```sh
+git clone https://github.com/TheRealShek/Image-Scrapper-Advanced.git
+cd Image-Scrapper-Advanced
+go mod tidy
+```
+
+### 2. Create the Download Folder
+> **Important:** The `Downloaded` folder is ignored by git (see `.gitignore`). You must create it yourself:
+```sh
+mkdir Downloaded
+```
+
+### 3. Run the Web UI
+```sh
+go run main.go
+```
+Then open [http://localhost:8080/](http://localhost:8080/) in your browser.
+
+---
 
 ## Usage
 
+### Web UI
+1. Paste the target URL.
+2. Select what to scrape: **Image**, **Video**, or **All**.
+3. Click **Scrape**. Downloads will appear in the `Downloaded/` folder.
 
-```
+### CLI (if enabled)
+```sh
 go run . -url <page_url> [-out <output_dir>] [-type image|video|all]
 ```
-- `-url` (required): The web page to scrape.
-- `-out`: Output directory (default: `./videos`).
-- `-type`: What to scrape: `image`, `video`, or `all` (default: `all`).
 
-## Flow
+---
 
-1. **main.go** parses flags and creates the output directory.
-2. Renders the page with JavaScript using a headless browser.
-3. Extracts image and/or video URLs from the rendered HTML.
-4. Downloads each found image or video to the output directory.
+## File Structure
+- `main.go` — Entry point, web server, and UI logic.
+- `internal/` — Modular logic for extraction, downloading, anti-ban, etc.
+- `.gitignore` — Excludes `Downloaded/` from git.
+
+---
 
 ## Requirements
 - Go 1.18+
 - [github.com/PuerkitoBio/goquery](https://github.com/PuerkitoBio/goquery)
+- [chromedp](https://github.com/chromedp/chromedp) (for headless browser rendering)
+
+---
 
 ## Example
 
-```
+**Web UI:**
+> Paste `https://example.com` and select `All` to download all images and videos to `Downloaded/`.
+
+**CLI:**
+```sh
 go run . -url https://example.com -type all
 ```
 
-This will download all images and videos found on the page to the `./videos` directory (or your specified output directory).
+---
