@@ -5,13 +5,12 @@
 
 ---
 
-## Features
-- **Web UI**: Paste a URL, select scrape type (image/video/all), and download with a click.
-- **Dynamic Content**: Uses a headless browser to render JavaScript-heavy sites.
-- **Smart Extraction**: Grabs full-res images and videos, avoids thumbnails, and handles data/relative URLs.
-- **Concurrent Downloads**: Fast, multi-threaded downloading.
-- **Auto File Type Detection**: Files are saved with the correct extension (jpg, png, mp4, etc.).
-- **Auto-Cleanup**: Skips and deletes files smaller than 50KB (configurable).
+## GitHub
+
+- **Repository:** [Image-Scrapper-Advanced](https://github.com/TheRealShek/Image-Scrapper-Advanced)
+- **Contributions:** Pull requests are welcome! Please open an issue first to discuss major changes.
+- **Issues:** If you find a bug or have a feature request, open an issue on the [GitHub Issues page](https://github.com/TheRealShek/Image-Scrapper-Advanced/issues).
+
 
 ---
 
@@ -52,10 +51,9 @@ go run . -url <page_url> [-out <output_dir>] [-type image|video|all]
 
 ---
 
+
 ## File Structure
-- `main.go` — Entry point, web server, and UI logic.
-- `internal/` — Modular logic for extraction, downloading, anti-ban, etc.
-- `.gitignore` — Excludes `Downloaded/` from git.
+See [`WORKFLOW.md`](./WORKFLOW.md) for detailed file and module descriptions.
 
 ---
 
