@@ -73,7 +73,7 @@ func main() {
 			result += fmt.Sprintf("<p>Image extraction error: %v</p>", err)
 		} else if len(imageURLs) > 0 {
 			result += fmt.Sprintf("<p>Found %d image files</p>", len(imageURLs))
-			internal.DownloadFilesConcurrently(imageURLs, "Downloaded")
+			internal.DownloadImagesAdvancedBatch(imageURLs, url, "Downloaded")
 			result += "<p>Downloaded images to Downloaded/</p>"
 		} else {
 			result += "<p>No image URLs found.</p>"

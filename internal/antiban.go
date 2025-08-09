@@ -3,6 +3,7 @@ package internal
 import (
 	"math/rand"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -21,7 +22,9 @@ func NewClient() *http.Client {
 }
 
 // RandomUserAgent returns a random User-Agent string.
+var randOnce sync.Once
+
 func RandomUserAgent() string {
-	rand.Seed(time.Now().UnixNano())
+	randOnce.Do(func() { rand.New(rand.NewSource(time.Now().UnixNano())) })
 	return userAgents[rand.Intn(len(userAgents))]
 }
